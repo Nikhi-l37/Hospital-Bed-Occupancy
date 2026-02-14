@@ -16,3 +16,7 @@ build/
 # System
 .DS_Store
 Thumbs.db
+
+!backend/
+!frontend/
+nm_temp/
