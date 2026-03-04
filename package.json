@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "start": "cd frontend && npm run dev",
+    "start:backend": "cd backend && python main.py",
+    "install:frontend": "cd frontend && npm install"
+  },
+  "dependencies": {
+    "axios": "^1.13.5",
+    "lucide-react": "^0.564.0",
+    "recharts": "^3.7.0"
+  }
+}

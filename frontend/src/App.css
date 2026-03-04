@@ -1,0 +1,591 @@
+/* ═══════════════════════════════════════════════════════════
+   App.css — Smart Hospital System
+   ═══════════════════════════════════════════════════════════ */
+
+/* App Container */
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+/* ─── Header ─────────────────────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.icon-wrapper {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    padding: 14px;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.03em;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    letter-spacing: 0.02em;
+}
+
+/* ─── Tab Navigation ─────────────────────────────────────── */
+.tab-nav {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    background: var(--surface);
+    padding: 6px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex: 1;
+    justify-content: center;
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+    background: var(--background);
+}
+
+.tab-btn.tab-active {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+/* ─── Tab Content fade in ────────────────────────────────── */
+.tab-content {
+    animation: fadeIn 0.35s ease-out;
+}
+
+/* ─── Controls ───────────────────────────────────────────── */
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    background: var(--surface);
+    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+}
+
+.date-input {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.date-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* ─── Dashboard Grid ─────────────────────────────────────── */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ─── Cards (shared) ─────────────────────────────────────── */
+.card {
+    background: var(--surface);
+    padding: 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.card-label {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1;
+}
+
+/* Status Card */
+.status-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: var(--radius);
+    font-weight: 600;
+}
+
+.status-low {
+    background-color: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: #166534;
+}
+
+.status-critical {
+    background-color: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: #991b1b;
+}
+
+/* Chart Container */
+.chart-container {
+    width: 100%;
+    height: 300px;
+}
+
+/* Loading & Error States */
+.state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    text-align: center;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PATIENT DASHBOARD  (Modules 4 & 5)
+   ═══════════════════════════════════════════════════════════ */
+
+.patient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 768px) {
+    .patient-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.patient-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ─── Card header row ────────────────────────────────────── */
+.card-header-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.upload-icon {
+    background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    color: #2563eb;
+}
+
+.symptom-icon {
+    background: linear-gradient(135deg, #f3e8ff, #faf5ff);
+    color: #7c3aed;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ─── File upload zone ───────────────────────────────────── */
+.file-drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    padding: 28px 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--background);
+}
+
+.file-drop-zone:hover {
+    border-color: var(--primary);
+    background: #f0f5ff;
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.file-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.file-hint {
+    font-size: 12px;
+    color: var(--secondary);
+    opacity: 0.7;
+}
+
+.file-selected {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.file-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.file-size {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ─── Buttons ────────────────────────────────────────────── */
+.btn-primary, .btn-accent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #fff;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-accent {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+}
+
+.btn-accent:hover:not(:disabled) {
+    background: linear-gradient(135deg, #6d28d9, #5b21b6);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    transform: translateY(-1px);
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-primary:disabled,
+.btn-accent:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ─── Symptom Textarea ───────────────────────────────────── */
+.symptom-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-main);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: var(--background);
+}
+
+.symptom-textarea::placeholder {
+    color: var(--secondary);
+    opacity: 0.6;
+}
+
+.symptom-textarea:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* ─── Result messages ────────────────────────────────────── */
+.result-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: #991b1b;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ─── OCR Result ─────────────────────────────────────────── */
+.ocr-result-box {
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.result-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    margin-bottom: 12px;
+}
+
+.ocr-text-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ocr-text-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.5;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.ocr-text-item:last-child {
+    border-bottom: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TREATMENT VISUALIZATION
+   ═══════════════════════════════════════════════════════════ */
+
+.treatment-section {
+    margin-top: 32px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* ─── Symptom Pills ──────────────────────────────────────── */
+.symptom-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.symptom-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d4ed8;
+}
+
+/* ─── Recommendation Cards ───────────────────────────────── */
+.rec-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.rec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rec-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.rec-card-header {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-bottom: 1px solid var(--border);
+}
+
+.rec-symptom-badge {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--primary);
+}
+
+.rec-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.rec-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 10px 0;
+}
+
+.rec-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.pill-icon {
+    color: #2563eb;
+}
+
+.clock-icon {
+    color: #7c3aed;
+}
+
+.rec-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.rec-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-main);
+    line-height: 1.4;
+}
+
+.rec-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2px 0;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
