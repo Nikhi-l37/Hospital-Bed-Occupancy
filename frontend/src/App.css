@@ -312,7 +312,8 @@
 }
 
 /* ─── Buttons ────────────────────────────────────────────── */
-.btn-primary, .btn-accent {
+.btn-primary,
+.btn-accent {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -566,12 +567,158 @@
     margin: 2px 0;
 }
 
+/* ─── Urgency Badges ─────────────────────────────────────── */
+.rec-card-header {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.urgency-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+}
+
+.urgency-mild {
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.urgency-moderate {
+    background: #fef9c3;
+    color: #854d0e;
+    border: 1px solid #fde047;
+}
+
+.urgency-severe {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* ─── Card border by urgency ─────────────────────────────── */
+.rec-card-severe {
+    border: 2px solid #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.15);
+}
+
+.rec-card-moderate {
+    border: 2px solid #f59e0b;
+}
+
+/* ─── Advice row ─────────────────────────────────────────── */
+.advice-icon {
+    color: #059669;
+}
+
+.rec-advice {
+    font-style: italic;
+    color: #374151;
+    font-size: 14px;
+}
+
+/* ─── Severe Warning Banner ──────────────────────────────── */
+.severe-warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border: 2px solid #ef4444;
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    color: #991b1b;
+    animation: pulseWarning 2s ease-in-out infinite;
+}
+
+.severe-warning-title {
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.severe-warning-text {
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+@keyframes pulseWarning {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 16px 4px rgba(239, 68, 68, 0.15);
+    }
+}
+
+/* ─── AI Badge ───────────────────────────────────────────── */
+.ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* ─── AI Summary Box ─────────────────────────────────────── */
+.ai-summary-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 1px solid #86efac;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    color: #166534;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.ai-summary-doctor {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border: 2px solid #ef4444;
+    color: #991b1b;
+    animation: pulseWarning 2s ease-in-out infinite;
+}
+
 /* ─── Animations ─────────────────────────────────────────── */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -583,7 +730,9 @@
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .animate-spin {

@@ -88,13 +88,23 @@ const App = () => {
     setSymptomError(null);
     setSymptomResult(null);
     try {
-      const response = await axios.post(`${API_BASE}/analyze-symptoms`, {
+      // Try AI-powered analysis first
+      const response = await axios.post(`${API_BASE}/ai-analyze`, {
         patient_text: symptomText
       });
       setSymptomResult(response.data);
     } catch (err) {
-      console.error("Symptom Error:", err);
-      setSymptomError(err.response?.data?.detail || "Failed to analyze symptoms.");
+      console.warn("AI analysis failed, falling back to keyword matching:", err);
+      // Fallback to keyword-based analysis
+      try {
+        const fallback = await axios.post(`${API_BASE}/analyze-symptoms`, {
+          patient_text: symptomText
+        });
+        setSymptomResult({ ...fallback.data, ai_powered: false });
+      } catch (err2) {
+        console.error("Symptom Error:", err2);
+        setSymptomError(err2.response?.data?.detail || "Failed to analyze symptoms.");
+      }
     }
     setSymptomLoading(false);
   };
@@ -119,7 +129,7 @@ const App = () => {
         </div>
         <div>
           <h1 className="title">Smart Hospital System</h1>
-          <p className="subtitle">Project 62B — AI-Powered Patient Care</p>
+          <p className="subtitle">Project  — AI-Powered Patient Care</p>
         </div>
       </header>
 
@@ -349,14 +359,20 @@ const App = () => {
               <div className="section-header">
                 <Sparkles size={22} color="var(--accent)" />
                 <h2 className="section-title">Treatment Recommendations</h2>
+                {symptomResult.ai_powered && (
+                  <span className="ai-badge">✨ AI Powered</span>
+                )}
               </div>
 
-              {symptomResult.detected_symptoms.length === 0 ? (
-                <div className="state-container" style={{ marginTop: 16 }}>
-                  <Search size={36} color="var(--text-muted)" />
-                  <p style={{ marginTop: 12 }}>No known symptoms detected. Try describing your condition in more detail.</p>
+              {/* AI Summary */}
+              {symptomResult.general_advice && (
+                <div className={`ai-summary-box ${symptomResult.see_doctor ? 'ai-summary-doctor' : ''}`}>
+                  <Stethoscope size={20} />
+                  <p>{symptomResult.general_advice}</p>
                 </div>
-              ) : (
+              )}
+
+              {symptomResult.detected_symptoms.length > 0 && (
                 <>
                   {/* Detected Symptoms Pills */}
                   <div className="symptom-pills">
@@ -371,10 +387,13 @@ const App = () => {
                   {/* Recommendation Cards */}
                   <div className="rec-cards-grid">
                     {symptomResult.recommendations.map((rec, i) => (
-                      <div key={i} className="rec-card">
+                      <div key={i} className={`rec-card ${rec.urgency === 'severe' ? 'rec-card-severe' : rec.urgency === 'moderate' ? 'rec-card-moderate' : ''}`}>
                         <div className="rec-card-header">
                           <span className="rec-symptom-badge">
                             {rec.symptom.charAt(0).toUpperCase() + rec.symptom.slice(1)}
+                          </span>
+                          <span className={`urgency-badge urgency-${rec.urgency}`}>
+                            {rec.urgency === 'severe' ? '🔴' : rec.urgency === 'moderate' ? '🟡' : '🟢'} {rec.urgency.toUpperCase()}
                           </span>
                         </div>
                         <div className="rec-card-body">
@@ -393,6 +412,18 @@ const App = () => {
                               <p className="rec-value">{rec.timeline}</p>
                             </div>
                           </div>
+                          {rec.advice && (
+                            <>
+                              <div className="rec-divider" />
+                              <div className="rec-row">
+                                <Stethoscope size={18} className="rec-icon advice-icon" />
+                                <div>
+                                  <p className="rec-label">Doctor's Advice</p>
+                                  <p className="rec-value rec-advice">{rec.advice}</p>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     ))}
